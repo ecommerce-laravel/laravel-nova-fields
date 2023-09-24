@@ -46,6 +46,7 @@ __webpack_require__.r(__webpack_exports__);
     setInitialValue: function setInitialValue() {
       this.value = this.field.value || '';
       this.options = this.field.options;
+      this.showCount = this.field.showCount || false;
     },
     /**
      * Fill the given FormData object with the field's internal value.
@@ -62,7 +63,8 @@ __webpack_require__.r(__webpack_exports__);
       // define the default value
       value: this.field.value,
       // define options
-      options: this.options
+      options: this.options,
+      showCount: this.field.showCount
     };
   }
 });
@@ -142,9 +144,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }),
         multiple: $props.field.multiple,
         options: $data.options,
-        "disable-branch-nodes": true,
+        "show-count": $data.showCount,
         "search-nested": ""
-      }, null, 8 /* PROPS */, ["id", "placeholder", "modelValue", "multiple", "options"])];
+      }, null, 8 /* PROPS */, ["id", "placeholder", "modelValue", "multiple", "options", "show-count"])];
     }),
     _: 1 /* STABLE */
   }, 8 /* PROPS */, ["field", "errors", "show-help-text"]);
@@ -23465,7 +23467,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			return __webpack_require__.O(result);
 /******/ 		}
 /******/ 		
-/******/ 		var chunkLoadingGlobal = self["webpackChunkwjurry_nova_tree_select"] = self["webpackChunkwjurry_nova_tree_select"] || [];
+/******/ 		var chunkLoadingGlobal = self["webpackChunkniekbr_nova_tree_select"] = self["webpackChunkniekbr_nova_tree_select"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
 /******/ 	})();
