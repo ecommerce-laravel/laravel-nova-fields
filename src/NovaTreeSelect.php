@@ -28,13 +28,4 @@ class NovaTreeSelect extends Field
             'multiple' => $value
         ]);
     }
-
-//    public function defaultValue($request, $value)
-//    {
-//        $value = $this->resolveDefaultValue($request);
-//
-//        return $this->withMeta([
-//            'value' => $value
-//        ]);
-//    }
 }
