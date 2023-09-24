@@ -28,4 +28,11 @@ class NovaTreeSelect extends Field
             'multiple' => $value
         ]);
     }
+
+    public function showCount($value = false)
+    {
+        return $this->withMeta([
+            'showCount' => $value
+        ]);
+    }
 }

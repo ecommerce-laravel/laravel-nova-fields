@@ -7,7 +7,7 @@
           v-model="value"
           :multiple="field.multiple"
           :options="options"
-          :disable-branch-nodes="true"
+          :show-count="showCount"
           search-nested
       />
     </template>
@@ -32,6 +32,7 @@ export default {
     setInitialValue() {
       this.value = this.field.value || '';
       this.options = this.field.options;
+      this.showCount = this.field.showCount || false;
     },
 
     /**
@@ -50,6 +51,7 @@ export default {
       value: this.field.value,
       // define options
       options: this.options,
+      showCount: this.field.showCount
     }
   },
 }
