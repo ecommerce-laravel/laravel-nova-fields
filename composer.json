@@ -1,5 +1,5 @@
 {
-    "name": "niekbr/nova-tree-select",
+    "name": "wjurry/nova-tree-select",
     "description": "A Laravel Nova field.",
     "keywords": [
         "laravel",
@@ -11,13 +11,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Niekbr\\NovaTreeSelect\\": "src/"
+            "Wjurry\\NovaTreeSelect\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Niekbr\\NovaTreeSelect\\FieldServiceProvider"
+                "Wjurry\\NovaTreeSelect\\FieldServiceProvider"
             ]
         }
     },

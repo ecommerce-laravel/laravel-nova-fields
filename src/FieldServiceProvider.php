@@ -1,6 +1,6 @@
 <?php
 
-namespace Niekbr\NovaTreeSelect;
+namespace Wjurry\NovaTreeSelect;
 
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Events\ServingNova;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Niekbr\NovaTreeSelect;
+namespace Wjurry\NovaTreeSelect;
 
 use Laravel\Nova\Fields\Field;
 
