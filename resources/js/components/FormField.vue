@@ -31,7 +31,7 @@ export default {
      */
     setInitialValue() {
       this.value = this.field.value || '';
-      this.options = this.field.options
+      this.options = this.field.options;
     },
 
     /**
@@ -47,7 +47,7 @@ export default {
   data() {
     return {
       // define the default value
-      value: this.value,
+      value: this.field.value,
       // define options
       options: this.options,
     }

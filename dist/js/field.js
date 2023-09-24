@@ -60,7 +60,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       // define the default value
-      value: this.value,
+      value: this.field.value,
       // define options
       options: this.options
     };
@@ -23465,7 +23465,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			return __webpack_require__.O(result);
 /******/ 		}
 /******/ 		
-/******/ 		var chunkLoadingGlobal = self["webpackChunkniekbr_nova_tree_select"] = self["webpackChunkniekbr_nova_tree_select"] || [];
+/******/ 		var chunkLoadingGlobal = self["webpackChunkwjurry_nova_tree_select"] = self["webpackChunkwjurry_nova_tree_select"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
 /******/ 	})();
