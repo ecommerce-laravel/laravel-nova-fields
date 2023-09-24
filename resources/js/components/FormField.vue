@@ -7,7 +7,8 @@
           v-model="value"
           :multiple="field.multiple"
           :options="options"
-          :value-consists-of="valueConsistsOf"
+          :value-consists-of="field.valueConsistsOf"
+          :flat="field.flatMode"
           :show-count="showCount"
           search-nested
       />
@@ -34,7 +35,6 @@ export default {
       this.value = this.field.value || '';
       this.options = this.field.options;
       this.showCount = this.field.showCount || false;
-      this.valueConsistsOf = this.field.valueConsistsOf;
     },
 
     /**
@@ -53,8 +53,7 @@ export default {
       value: this.field.value,
       // define options
       options: this.options,
-      showCount: this.field.showCount,
-      valueConsistsOf: this.field.valueConsistsOf
+      showCount: this.field.showCount
     }
   },
 }

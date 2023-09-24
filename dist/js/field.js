@@ -144,9 +144,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }),
         multiple: $props.field.multiple,
         options: $data.options,
+        "value-consists-of": $props.field.valueConsistsOf,
+        flat: $props.field.flatMode,
         "show-count": $data.showCount,
         "search-nested": ""
-      }, null, 8 /* PROPS */, ["id", "placeholder", "modelValue", "multiple", "options", "show-count"])];
+      }, null, 8 /* PROPS */, ["id", "placeholder", "modelValue", "multiple", "options", "value-consists-of", "flat", "show-count"])];
     }),
     _: 1 /* STABLE */
   }, 8 /* PROPS */, ["field", "errors", "show-help-text"]);

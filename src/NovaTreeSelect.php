@@ -17,6 +17,7 @@ class NovaTreeSelect extends Field
 
     /**
      * List of options
+     * check https://vue-treeselect.js.org/#getting-started
      *
      * @param $value
      * @return mixed
@@ -56,6 +57,7 @@ class NovaTreeSelect extends Field
 
     /**
      * Change selection behavior
+     * check https://vue-treeselect.js.org/#prevent-value-combining
      *
      * @param $value "ALL|BRANCH_PRIORITY|LEAF_PRIORITY|ALL_WITH_INDETERMINATE
      * @return mixed
@@ -64,6 +66,20 @@ class NovaTreeSelect extends Field
     {
         return $this->withMeta([
             'valueConsistsOf' => $value
+        ]);
+    }
+
+    /**
+     * Use selection flat mode
+     * check https://vue-treeselect.js.org/#flat-mode-and-sort-values
+     *
+     * @param $value
+     * @return NovaTreeSelect
+     */
+    public function flatMode($value = false)
+    {
+        return $this->withMeta([
+            'flatMode' => $value
         ]);
     }
 }
