@@ -1,6 +1,6 @@
 {
     "name": "wjurry/nova-tree-select",
-    "description": "A Laravel Nova field.",
+    "description": "A Laravel Nova Tree Select Field.",
     "keywords": [
         "laravel",
         "nova"
