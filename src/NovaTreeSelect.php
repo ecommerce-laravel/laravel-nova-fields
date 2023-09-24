@@ -15,6 +15,12 @@ class NovaTreeSelect extends Field
 
     public $disk;
 
+    /**
+     * List of options
+     *
+     * @param $value
+     * @return mixed
+     */
     public function options($value)
     {
         return $this->withMeta([
@@ -22,6 +28,12 @@ class NovaTreeSelect extends Field
         ]);
     }
 
+    /**
+     * Is support multiple selections
+     *
+     * @param $value
+     * @return mixed
+     */
     public function multiple($value)
     {
         return $this->withMeta([
@@ -29,10 +41,29 @@ class NovaTreeSelect extends Field
         ]);
     }
 
+    /**
+     * Show children count for each node
+     *
+     * @param $value
+     * @return mixed
+     */
     public function showCount($value = false)
     {
         return $this->withMeta([
             'showCount' => $value
+        ]);
+    }
+
+    /**
+     * Change selection behavior
+     *
+     * @param $value "ALL|BRANCH_PRIORITY|LEAF_PRIORITY|ALL_WITH_INDETERMINATE
+     * @return mixed
+     */
+    public function valueConsistsOf($value = 'ALL')
+    {
+        return $this->withMeta([
+            'valueConsistsOf' => $value
         ]);
     }
 }
