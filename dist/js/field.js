@@ -83,7 +83,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['resourceName', 'field']
+  props: ['resourceName', 'field'],
+  computed: {
+    fieldValue: function fieldValue() {
+      return this.field.displayedAs || this.field.value;
+    }
+  }
 });
 
 /***/ }),
@@ -171,7 +176,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.field.value), 1 /* TEXT */);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.fieldValue), 1 /* TEXT */);
 }
 
 /***/ }),
@@ -195,6 +200,76 @@ Nova.booting(function (app, store) {
   app.component('detail-nova-tree-select', _components_DetailField__WEBPACK_IMPORTED_MODULE_1__["default"]);
   app.component('form-nova-tree-select', _components_FormField__WEBPACK_IMPORTED_MODULE_2__["default"]);
 });
+
+/***/ }),
+
+/***/ "../../vendor/laravel/nova/resources/js/composables/useLocalization.js":
+/*!*****************************************************************************!*\
+  !*** ../../vendor/laravel/nova/resources/js/composables/useLocalization.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useLocalization: () => (/* binding */ useLocalization)
+/* harmony export */ });
+/* harmony import */ var _util_localization__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/localization */ "../../vendor/laravel/nova/resources/js/util/localization.js");
+
+function useLocalization() {
+  return {
+    __: function __(key, replace) {
+      return (0,_util_localization__WEBPACK_IMPORTED_MODULE_0__["default"])(key, replace);
+    }
+  };
+}
+
+/***/ }),
+
+/***/ "../../vendor/laravel/nova/resources/js/mixins/CopiesToClipboard.js":
+/*!**************************************************************************!*\
+  !*** ../../vendor/laravel/nova/resources/js/mixins/CopiesToClipboard.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   useCopyValueToClipboard: () => (/* binding */ useCopyValueToClipboard)
+/* harmony export */ });
+var mixin = {
+  methods: {
+    copyValueToClipboard: function copyValueToClipboard(value) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(value);
+      } else if (window.clipboardData) {
+        window.clipboardData.setData('Text', value);
+      } else {
+        var input = document.createElement('input');
+        var _ref = [document.documentElement.scrollTop, document.documentElement.scrollLeft],
+          scrollTop = _ref[0],
+          scrollLeft = _ref[1];
+        document.body.appendChild(input);
+        input.value = value;
+        input.focus();
+        input.select();
+        document.documentElement.scrollTop = scrollTop;
+        document.documentElement.scrollLeft = scrollLeft;
+        document.execCommand('copy');
+        input.remove();
+      }
+    }
+  }
+};
+function useCopyValueToClipboard() {
+  return {
+    copyValueToClipboard: function copyValueToClipboard(value) {
+      return mixin.methods.copyValueToClipboard(value);
+    }
+  };
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (mixin);
 
 /***/ }),
 
@@ -227,6 +302,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_pickBy__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(lodash_pickBy__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _FormField__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./FormField */ "../../vendor/laravel/nova/resources/js/mixins/FormField.js");
 /* harmony import */ var _propTypes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./propTypes */ "../../vendor/laravel/nova/resources/js/mixins/propTypes.js");
+/* harmony import */ var _util_escapeUnicode__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../util/escapeUnicode */ "../../vendor/laravel/nova/resources/js/util/escapeUnicode.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
 
 
 
@@ -239,7 +322,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   "extends": _FormField__WEBPACK_IMPORTED_MODULE_8__["default"],
-  props: (0,_propTypes__WEBPACK_IMPORTED_MODULE_9__.mapProps)(['shownViaNewRelationModal', 'field', 'viaResource', 'viaResourceId', 'viaRelationship', 'resourceName', 'resourceId', 'relatedResourceName', 'relatedResourceId']),
+  emits: ['field-shown', 'field-hidden'],
+  props: _objectSpread(_objectSpread({}, (0,_propTypes__WEBPACK_IMPORTED_MODULE_9__.mapProps)(['shownViaNewRelationModal', 'field', 'viaResource', 'viaResourceId', 'viaRelationship', 'resourceName', 'resourceId', 'relatedResourceName', 'relatedResourceId'])), {}, {
+    syncEndpoint: {
+      type: String,
+      required: false
+    }
+  }),
   data: function data() {
     return {
       dependentFieldDebouncer: null,
@@ -275,7 +364,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.watchedEvents[dependsOn] = function (value) {
           _this.watchedFields[dependsOn] = value;
           _this.dependentFieldDebouncer(function () {
-            return _this.syncField();
+            _this.watchedFields[dependsOn] = value;
+            _this.syncField();
           });
         };
         _this.watchedFields[dependsOn] = defaultValue;
@@ -285,9 +375,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   beforeUnmount: function beforeUnmount() {
     var _this2 = this;
+    if (this.canceller !== null) this.canceller();
     if (!lodash_isEmpty__WEBPACK_IMPORTED_MODULE_5___default()(this.watchedEvents)) {
       lodash_forIn__WEBPACK_IMPORTED_MODULE_2___default()(this.watchedEvents, function (event, dependsOn) {
-        Nova.$off(_this2.getFieldAttributeChangeEventName(event.dependsOn), event);
+        Nova.$off(_this2.getFieldAttributeChangeEventName(dependsOn), event);
       });
     }
   },
@@ -298,41 +389,77 @@ __webpack_require__.r(__webpack_exports__);
     setInitialValue: function setInitialValue() {
       this.value = !(this.currentField.value === undefined || this.currentField.value === null) ? this.currentField.value : this.value;
     },
+    /**
+     * Provide a function to fills FormData when field is visible.
+     */
+    fillIfVisible: function fillIfVisible(formData, attribute, value) {
+      if (this.currentlyIsVisible) {
+        formData.append(attribute, value);
+      }
+    },
     syncField: function syncField() {
       var _this3 = this;
       if (this.canceller !== null) this.canceller();
-      Nova.request().patch(this.syncFieldEndpoint, this.watchedFields, {
+      Nova.request().patch(this.syncEndpoint || this.syncFieldEndpoint, this.dependentFieldValues, {
         params: lodash_pickBy__WEBPACK_IMPORTED_MODULE_7___default()({
           editing: true,
           editMode: this.editMode,
           viaResource: this.viaResource,
           viaResourceId: this.viaResourceId,
           viaRelationship: this.viaRelationship,
-          field: this.field.attribute
+          field: this.fieldAttribute,
+          component: this.field.dependentComponentKey
         }, (lodash_identity__WEBPACK_IMPORTED_MODULE_4___default())),
         cancelToken: new axios__WEBPACK_IMPORTED_MODULE_0__.CancelToken(function (canceller) {
           _this3.canceller = canceller;
         })
       }).then(function (response) {
+        var wasVisible = _this3.currentlyIsVisible;
         _this3.syncedField = response.data;
+        if (_this3.syncedField.visible !== wasVisible) {
+          _this3.$emit(_this3.syncedField.visible === true ? 'field-shown' : 'field-hidden', _this3.fieldAttribute);
+        }
         if (lodash_isNil__WEBPACK_IMPORTED_MODULE_6___default()(_this3.syncedField.value)) {
           _this3.syncedField.value = _this3.field.value;
         } else {
           _this3.setInitialValue();
         }
+        var emitChangesEvent = !_this3.syncedFieldValueHasNotChanged();
         _this3.onSyncedField();
+        if (_this3.syncedField.dependentShouldEmitChangesEvent && emitChangesEvent) {
+          _this3.emitOnSyncedFieldValueChange();
+        }
+      })["catch"](function (e) {
+        if ((0,axios__WEBPACK_IMPORTED_MODULE_0__.isCancel)(e)) {
+          return;
+        }
+        throw e;
       });
     },
     onSyncedField: function onSyncedField() {
       //
+    },
+    emitOnSyncedFieldValueChange: function emitOnSyncedFieldValueChange() {
+      this.emitFieldValueChange(this.field.attribute, this.currentField.value);
+    },
+    syncedFieldValueHasNotChanged: function syncedFieldValueHasNotChanged() {
+      var _this$value;
+      var value = this.currentField.value;
+      return !lodash_isNil__WEBPACK_IMPORTED_MODULE_6___default()(value) && (value === null || value === void 0 ? void 0 : value.toString()) === ((_this$value = this.value) === null || _this$value === void 0 ? void 0 : _this$value.toString());
     }
   },
   computed: {
     /**
-     * Determine if the field is in readonly mode
+     * Determine the current field
      */
     currentField: function currentField() {
       return this.syncedField || this.field;
+    },
+    /**
+     * Determine if the field is in visible mode
+     */
+    currentlyIsVisible: function currentlyIsVisible() {
+      return this.currentField.visible;
     },
     /**
      * Determine if the field is in readonly mode
@@ -346,15 +473,63 @@ __webpack_require__.r(__webpack_exports__);
     dependsOn: function dependsOn() {
       return this.field.dependsOn || [];
     },
+    currentFieldValues: function currentFieldValues() {
+      return _defineProperty({}, this.fieldAttribute, this.value);
+    },
+    dependentFieldValues: function dependentFieldValues() {
+      return _objectSpread(_objectSpread({}, this.currentFieldValues), this.watchedFields);
+    },
+    encodedDependentFieldValues: function encodedDependentFieldValues() {
+      return btoa((0,_util_escapeUnicode__WEBPACK_IMPORTED_MODULE_10__.escapeUnicode)(JSON.stringify(this.dependentFieldValues)));
+    },
     syncFieldEndpoint: function syncFieldEndpoint() {
       if (this.editMode === 'update-attached') {
         return "/nova-api/".concat(this.resourceName, "/").concat(this.resourceId, "/update-pivot-fields/").concat(this.relatedResourceName, "/").concat(this.relatedResourceId);
-      } else if (this.editMode == 'attach') {
+      } else if (this.editMode === 'attach') {
         return "/nova-api/".concat(this.resourceName, "/").concat(this.resourceId, "/creation-pivot-fields/").concat(this.relatedResourceName);
       } else if (this.editMode === 'update') {
         return "/nova-api/".concat(this.resourceName, "/").concat(this.resourceId, "/update-fields");
       }
       return "/nova-api/".concat(this.resourceName, "/creation-fields");
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "../../vendor/laravel/nova/resources/js/mixins/FieldValue.js":
+/*!*******************************************************************!*\
+  !*** ../../vendor/laravel/nova/resources/js/mixins/FieldValue.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _util_filled__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/filled */ "../../vendor/laravel/nova/resources/js/util/filled.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['field'],
+  computed: {
+    fieldAttribute: function fieldAttribute() {
+      return this.field.attribute;
+    },
+    fieldHasValue: function fieldHasValue() {
+      return (0,_util_filled__WEBPACK_IMPORTED_MODULE_0__["default"])(this.field.value);
+    },
+    usesCustomizedDisplay: function usesCustomizedDisplay() {
+      return this.field.usesCustomizedDisplay && (0,_util_filled__WEBPACK_IMPORTED_MODULE_0__["default"])(this.field.displayedAs);
+    },
+    fieldValue: function fieldValue() {
+      if (!this.usesCustomizedDisplay && !this.fieldHasValue) {
+        return null;
+      }
+      return String(this.field.displayedAs || this.field.value);
+    },
+    shouldDisplayAsHtml: function shouldDisplayAsHtml() {
+      return this.field.asHtml;
     }
   }
 });
@@ -420,13 +595,13 @@ __webpack_require__.r(__webpack_exports__);
      * Get field attribue value event name.
      */
     fieldAttributeValueEventName: function fieldAttributeValueEventName() {
-      return this.getFieldAttributeValueEventName(this.field.attribute);
+      return this.getFieldAttributeValueEventName(this.fieldAttribute);
     },
     /**
      * Get field attribue value event name.
      */
     fieldAttributeChangeEventName: function fieldAttributeChangeEventName() {
-      return this.getFieldAttributeChangeEventName(this.field.attribute);
+      return this.getFieldAttributeChangeEventName(this.fieldAttribute);
     }
   }
 });
@@ -462,19 +637,16 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   "extends": _FormEvents__WEBPACK_IMPORTED_MODULE_3__["default"],
-  props: _objectSpread(_objectSpread({}, (0,_propTypes__WEBPACK_IMPORTED_MODULE_2__.mapProps)(['shownViaNewRelationModal', 'field', 'viaResource', 'viaResourceId', 'viaRelationship', 'resourceName', 'showHelpText'])), {}, {
-    formUniqueId: {
-      type: String
-    }
-  }),
+  props: _objectSpread({}, (0,_propTypes__WEBPACK_IMPORTED_MODULE_2__.mapProps)(['nested', 'shownViaNewRelationModal', 'field', 'viaResource', 'viaResourceId', 'viaRelationship', 'resourceName', 'resourceId', 'showHelpText', 'mode'])),
   data: function data() {
     return {
       value: ''
     };
   },
-  mounted: function mounted() {
+  created: function created() {
     this.setInitialValue();
-
+  },
+  mounted: function mounted() {
     // Add a default fill method for the field
     this.field.fill = this.fill;
 
@@ -496,7 +668,15 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
      * field's internal value attribute
      */
     fill: function fill(formData) {
-      formData.append(this.field.attribute, String(this.value));
+      this.fillIfVisible(formData, this.fieldAttribute, String(this.value));
+    },
+    /**
+     * Provide a function to fills FormData when field is visible.
+     */
+    fillIfVisible: function fillIfVisible(formData, attribute, value) {
+      if (this.isVisible) {
+        formData.append(attribute, value);
+      }
     },
     /**
      * Update the field's internal value
@@ -504,8 +684,14 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     handleChange: function handleChange(event) {
       this.value = event.target.value;
       if (this.field) {
-        this.emitFieldValueChange(this.field.attribute, this.value);
+        this.emitFieldValueChange(this.fieldAttribute, this.value);
       }
+    },
+    /**
+     * Clean up any side-effects when removing this field dynamically (Repeater).
+     */
+    beforeRemove: function beforeRemove() {
+      //
     },
     listenToValueChanges: function listenToValueChanges(value) {
       this.value = value;
@@ -513,10 +699,186 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   },
   computed: {
     /**
+     * Determine the current field
+     */
+    currentField: function currentField() {
+      return this.field;
+    },
+    /**
+     * Determine if the field should use all the available white-space.
+     */
+    fullWidthContent: function fullWidthContent() {
+      return this.currentField.fullWidth || this.field.fullWidth;
+    },
+    /**
+     * Return the placeholder text for the field.
+     */
+    placeholder: function placeholder() {
+      return this.currentField.placeholder || this.field.name;
+    },
+    /**
+     * Determine if the field is in visible mode
+     */
+    isVisible: function isVisible() {
+      return this.field.visible;
+    },
+    /**
      * Determine if the field is in readonly mode
      */
     isReadonly: function isReadonly() {
       return Boolean(this.field.readonly || lodash_get__WEBPACK_IMPORTED_MODULE_0___default()(this.field, 'extraAttributes.readonly'));
+    },
+    /**
+     * Determine if the field is accessed from Action
+     */
+    isActionRequest: function isActionRequest() {
+      return ['action-fullscreen', 'action-modal'].includes(this.mode);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "../../vendor/laravel/nova/resources/js/mixins/HandlesFieldAttachments.js":
+/*!********************************************************************************!*\
+  !*** ../../vendor/laravel/nova/resources/js/mixins/HandlesFieldAttachments.js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var form_backend_validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! form-backend-validation */ "../../vendor/laravel/nova/node_modules/form-backend-validation/dist/index.js");
+/* harmony import */ var lodash_isNil__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/isNil */ "../../vendor/laravel/nova/node_modules/lodash/isNil.js");
+/* harmony import */ var lodash_isNil__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_isNil__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _propTypes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./propTypes */ "../../vendor/laravel/nova/resources/js/mixins/propTypes.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _toArray(arr) { return _arrayWithHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  emits: ['file-upload-started', 'file-upload-finished'],
+  props: (0,_propTypes__WEBPACK_IMPORTED_MODULE_2__.mapProps)(['resourceName']),
+  created: function created() {
+    var _this = this;
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      var _yield$Nova$request$g, draftId;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            if (!_this.field.withFiles) {
+              _context.next = 6;
+              break;
+            }
+            _context.next = 3;
+            return Nova.request().get("/nova-api/".concat(_this.resourceName, "/field-attachment/").concat(_this.fieldAttribute, "/draftId"));
+          case 3:
+            _yield$Nova$request$g = _context.sent;
+            draftId = _yield$Nova$request$g.data.draftId;
+            _this.draftId = draftId;
+          case 6:
+          case "end":
+            return _context.stop();
+        }
+      }, _callee);
+    }))();
+  },
+  data: function data() {
+    return {
+      draftId: null
+    };
+  },
+  methods: {
+    /**
+     * Upload an attachment
+     */
+    uploadAttachment: function uploadAttachment(file, _ref) {
+      var _this2 = this;
+      var onUploadProgress = _ref.onUploadProgress,
+        onCompleted = _ref.onCompleted,
+        onFailure = _ref.onFailure;
+      var data = new FormData();
+      data.append('Content-Type', file.type);
+      data.append('attachment', file);
+      data.append('draftId', this.draftId);
+      if (lodash_isNil__WEBPACK_IMPORTED_MODULE_1___default()(onUploadProgress)) {
+        onUploadProgress = function onUploadProgress() {};
+      }
+      if (lodash_isNil__WEBPACK_IMPORTED_MODULE_1___default()(onFailure)) {
+        onFailure = function onFailure() {};
+      }
+      if (lodash_isNil__WEBPACK_IMPORTED_MODULE_1___default()(onCompleted)) {
+        throw 'Missing onCompleted parameter';
+      }
+      this.$emit('file-upload-started');
+      Nova.request().post("/nova-api/".concat(this.resourceName, "/field-attachment/").concat(this.fieldAttribute), data, {
+        onUploadProgress: onUploadProgress
+      }).then(function (_ref2) {
+        var url = _ref2.data.url;
+        var response = onCompleted(url);
+        _this2.$emit('file-upload-finished');
+        return response;
+      })["catch"](function (error) {
+        onFailure(error);
+        if (error.response.status == 422) {
+          var validationErrors = new form_backend_validation__WEBPACK_IMPORTED_MODULE_0__.Errors(error.response.data.errors);
+          Nova.error(_this2.__('An error occurred while uploading the file: :error', {
+            error: validationErrors.first('attachment')
+          }));
+        } else {
+          Nova.error(_this2.__('An error occurred while uploading the file.'));
+        }
+      });
+    },
+    /**
+     * Remove an attachment from the server
+     */
+    removeAttachment: function removeAttachment(attachmentUrl) {
+      Nova.request()["delete"]("/nova-api/".concat(this.resourceName, "/field-attachment/").concat(this.fieldAttribute), {
+        params: {
+          attachmentUrl: attachmentUrl
+        }
+      }).then(function (response) {})["catch"](function (error) {});
+    },
+    /**
+     * Purge pending attachments for the draft
+     */
+    clearAttachments: function clearAttachments() {
+      if (this.field.withFiles) {
+        Nova.request()["delete"]("/nova-api/".concat(this.resourceName, "/field-attachment/").concat(this.fieldAttribute, "/").concat(this.draftId)).then(function (response) {})["catch"](function (error) {});
+      }
+    },
+    /**
+     * Fill draft id for the field
+     */
+    fillAttachmentDraftId: function fillAttachmentDraftId(formData) {
+      var attribute = this.fieldAttribute;
+      var _attribute$split = attribute.split('['),
+        _attribute$split2 = _toArray(_attribute$split),
+        name = _attribute$split2[0],
+        nested = _attribute$split2.slice(1);
+      if (!lodash_isNil__WEBPACK_IMPORTED_MODULE_1___default()(nested) && nested.length > 0) {
+        var last = nested.pop();
+        if (nested.length > 0) {
+          attribute = "".concat(name, "[").concat(nested.join('['), "[").concat(last.slice(0, -1), "DraftId]");
+        } else {
+          attribute = "".concat(name, "[").concat(last.slice(0, -1), "DraftId]");
+        }
+      } else {
+        attribute = "".concat(attribute, "DraftId");
+      }
+      this.fillIfVisible(formData, attribute, this.draftId);
     }
   }
 });
@@ -576,6 +938,63 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.handleResponseError(error);
       }
+    },
+    /**
+     * Reset validation errors.
+     */
+    resetErrors: function resetErrors() {
+      this.validationErrors = new form_backend_validation__WEBPACK_IMPORTED_MODULE_0__.Errors();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "../../vendor/laravel/nova/resources/js/mixins/HandlesPanelVisibility.js":
+/*!*******************************************************************************!*\
+  !*** ../../vendor/laravel/nova/resources/js/mixins/HandlesPanelVisibility.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var lodash_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/each */ "../../vendor/laravel/nova/node_modules/lodash/each.js");
+/* harmony import */ var lodash_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_each__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var lodash_filter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/filter */ "../../vendor/laravel/nova/node_modules/lodash/filter.js");
+/* harmony import */ var lodash_filter__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_filter__WEBPACK_IMPORTED_MODULE_1__);
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  emits: ['field-shown', 'field-hidden'],
+  data: function data() {
+    return {
+      visibleFieldsForPanel: {}
+    };
+  },
+  created: function created() {
+    var _this = this;
+    lodash_each__WEBPACK_IMPORTED_MODULE_0___default()(this.panel.fields, function (field) {
+      _this.visibleFieldsForPanel[field.attribute] = field.visible;
+    });
+  },
+  methods: {
+    handleFieldShown: function handleFieldShown(field) {
+      this.visibleFieldsForPanel[field] = true;
+      this.$emit('field-shown', field);
+    },
+    handleFieldHidden: function handleFieldHidden(field) {
+      this.visibleFieldsForPanel[field] = false;
+      this.$emit('field-hidden', field);
+    }
+  },
+  computed: {
+    visibleFieldsCount: function visibleFieldsCount() {
+      return Object.entries(lodash_filter__WEBPACK_IMPORTED_MODULE_1___default()(this.visibleFieldsForPanel, function (visible) {
+        return visible === true;
+      })).length;
     }
   }
 });
@@ -644,6 +1063,14 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
+  inject: {
+    index: {
+      "default": null
+    },
+    viaParent: {
+      "default": null
+    }
+  },
   data: function data() {
     return {
       errorClass: 'form-input-border-error'
@@ -657,7 +1084,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.field.attribute;
     },
     validationKey: function validationKey() {
-      return this.field.validationKey;
+      return this.nestedValidationKey || this.field.validationKey;
     },
     hasError: function hasError() {
       return this.errors.has(this.validationKey);
@@ -665,6 +1092,16 @@ __webpack_require__.r(__webpack_exports__);
     firstError: function firstError() {
       if (this.hasError) {
         return this.errors.first(this.validationKey);
+      }
+    },
+    nestedAttribute: function nestedAttribute() {
+      if (this.viaParent) {
+        return "".concat(this.viaParent, "[").concat(this.index, "][").concat(this.field.attribute, "]");
+      }
+    },
+    nestedValidationKey: function nestedValidationKey() {
+      if (this.viaParent) {
+        return "".concat(this.viaParent, ".").concat(this.index, ".fields.").concat(this.field.attribute);
       }
     }
   }
@@ -778,8 +1215,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var lodash_forEach__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/forEach */ "../../vendor/laravel/nova/node_modules/lodash/forEach.js");
-/* harmony import */ var lodash_forEach__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_forEach__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _util_localization__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/localization */ "../../vendor/laravel/nova/resources/js/util/localization.js");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   methods: {
@@ -787,21 +1223,7 @@ __webpack_require__.r(__webpack_exports__);
      * Translate the given key.
      */
     __: function __(key, replace) {
-      var translation = Nova.config('translations')[key] ? Nova.config('translations')[key] : key;
-      lodash_forEach__WEBPACK_IMPORTED_MODULE_0___default()(replace, function (value, key) {
-        key = new String(key);
-        if (value === null) {
-          console.error("Translation '".concat(translation, "' for key '").concat(key, "' contains a null replacement."));
-          return;
-        }
-        value = new String(value);
-        var searches = [':' + key, ':' + key.toUpperCase(), ':' + key.charAt(0).toUpperCase() + key.slice(1)];
-        var replacements = [value, value.toUpperCase(), value.charAt(0).toUpperCase() + value.slice(1)];
-        for (var i = searches.length - 1; i >= 0; i--) {
-          translation = translation.replace(searches[i], replacements[i]);
-        }
-      });
-      return translation;
+      return (0,_util_localization__WEBPACK_IMPORTED_MODULE_0__["default"])(key, replace);
     }
   }
 });
@@ -849,14 +1271,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "../../vendor/laravel/nova/node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "../../vendor/laravel/nova/node_modules/vuex/dist/vuex.esm-bundler.js");
 /* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia */ "../../vendor/laravel/nova/node_modules/@inertiajs/inertia/dist/index.js");
+/* harmony import */ var _util_filled__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/filled */ "../../vendor/laravel/nova/resources/js/util/filled.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -883,23 +1307,30 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   },
   unmounted: function unmounted() {
     this.removeOnNavigationChangesEvent();
+    this.resetPushState();
   },
   data: function data() {
     return {
       removeOnNavigationChangesEvent: null,
-      removeOnBeforeUnloadEvent: null
+      removeOnBeforeUnloadEvent: null,
+      navigateBackUsingHistory: true
     };
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapMutations)(['allowLeavingForm', 'preventLeavingForm'])), {}, {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapMutations)(['allowLeavingForm', 'preventLeavingForm', 'triggerPushState', 'resetPushState'])), {}, {
     /**
      * Prevent accidental abandonment only if form was changed.
      */
     updateFormStatus: function updateFormStatus() {
       if (this.canLeaveForm == true) {
-        _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.pushState(_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.page);
-        _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.ignoreHistoryState = true;
+        this.triggerPushState();
       }
       this.preventLeavingForm();
+    },
+    enableNavigateBackUsingHistory: function enableNavigateBackUsingHistory() {
+      this.navigateBackUsingHistory = false;
+    },
+    disableNavigateBackUsingHistory: function disableNavigateBackUsingHistory() {
+      this.navigateBackUsingHistory = false;
     },
     handlePreventFormAbandonment: function handlePreventFormAbandonment(proceed, revert) {
       if (this.canLeaveForm) {
@@ -936,15 +1367,14 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         _this4.handleProceedingToPreviousPage();
         _this4.allowLeavingForm();
       }, function () {
-        _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.pushState(_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.page);
-        _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.ignoreHistoryState = true;
+        _this4.triggerPushState();
       });
     },
     handleProceedingToPreviousPage: function handleProceedingToPreviousPage() {
       window.onpopstate = null;
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.ignoreHistoryState = false;
       this.removeOnBeforeUnloadEvent();
-      if (!this.canLeaveForm) {
+      if (!this.canLeaveFormToPreviousPage && this.navigateBackUsingHistory) {
         window.history.back();
       }
     },
@@ -952,9 +1382,20 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       window.onpopstate = null;
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.ignoreHistoryState = false;
       this.removeOnBeforeUnloadEvent();
+    },
+    proceedToPreviousPage: function proceedToPreviousPage(url) {
+      if (this.navigateBackUsingHistory && window.history.length > 1) {
+        window.history.back();
+      } else if (!this.navigateBackUsingHistory && (0,_util_filled__WEBPACK_IMPORTED_MODULE_1__["default"])(url)) {
+        Nova.visit(url, {
+          replace: true
+        });
+      } else {
+        Nova.visit('/');
+      }
     }
   }),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['canLeaveForm']))
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)(['canLeaveForm', 'canLeaveFormToPreviousPage']))
 });
 
 /***/ }),
@@ -1020,33 +1461,49 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   DependentFormField: () => (/* reexport safe */ _DependentFormField__WEBPACK_IMPORTED_MODULE_3__["default"]),
-/* harmony export */   Errors: () => (/* reexport safe */ form_backend_validation__WEBPACK_IMPORTED_MODULE_12__.Errors),
-/* harmony export */   FormEvents: () => (/* reexport safe */ _FormEvents__WEBPACK_IMPORTED_MODULE_8__["default"]),
-/* harmony export */   FormField: () => (/* reexport safe */ _FormField__WEBPACK_IMPORTED_MODULE_9__["default"]),
-/* harmony export */   HandlesFormRequest: () => (/* reexport safe */ _HandlesFormRequest__WEBPACK_IMPORTED_MODULE_4__["default"]),
-/* harmony export */   HandlesUploads: () => (/* reexport safe */ _HandlesUploads__WEBPACK_IMPORTED_MODULE_5__["default"]),
-/* harmony export */   HandlesValidationErrors: () => (/* reexport safe */ _HandlesValidationErrors__WEBPACK_IMPORTED_MODULE_10__["default"]),
-/* harmony export */   HasCards: () => (/* reexport safe */ _HasCards__WEBPACK_IMPORTED_MODULE_11__["default"]),
-/* harmony export */   Localization: () => (/* reexport safe */ _Localization__WEBPACK_IMPORTED_MODULE_6__["default"]),
-/* harmony export */   MetricBehavior: () => (/* reexport safe */ _MetricBehavior__WEBPACK_IMPORTED_MODULE_7__["default"]),
-/* harmony export */   PreventsFormAbandonment: () => (/* reexport safe */ _PreventsFormAbandonment__WEBPACK_IMPORTED_MODULE_1__["default"]),
-/* harmony export */   PreventsModalAbandonment: () => (/* reexport safe */ _PreventsModalAbandonment__WEBPACK_IMPORTED_MODULE_2__["default"]),
-/* harmony export */   mapProps: () => (/* reexport safe */ _propTypes__WEBPACK_IMPORTED_MODULE_0__.mapProps)
+/* harmony export */   CopiesToClipboard: () => (/* reexport safe */ _CopiesToClipboard__WEBPACK_IMPORTED_MODULE_1__["default"]),
+/* harmony export */   DependentFormField: () => (/* reexport safe */ _DependentFormField__WEBPACK_IMPORTED_MODULE_4__["default"]),
+/* harmony export */   Errors: () => (/* reexport safe */ form_backend_validation__WEBPACK_IMPORTED_MODULE_16__.Errors),
+/* harmony export */   FieldValue: () => (/* reexport safe */ _FieldValue__WEBPACK_IMPORTED_MODULE_9__["default"]),
+/* harmony export */   FormEvents: () => (/* reexport safe */ _FormEvents__WEBPACK_IMPORTED_MODULE_10__["default"]),
+/* harmony export */   FormField: () => (/* reexport safe */ _FormField__WEBPACK_IMPORTED_MODULE_11__["default"]),
+/* harmony export */   HandlesFieldAttachments: () => (/* reexport safe */ _HandlesFieldAttachments__WEBPACK_IMPORTED_MODULE_12__["default"]),
+/* harmony export */   HandlesFormRequest: () => (/* reexport safe */ _HandlesFormRequest__WEBPACK_IMPORTED_MODULE_5__["default"]),
+/* harmony export */   HandlesPanelVisibility: () => (/* reexport safe */ _HandlesPanelVisibility__WEBPACK_IMPORTED_MODULE_15__["default"]),
+/* harmony export */   HandlesUploads: () => (/* reexport safe */ _HandlesUploads__WEBPACK_IMPORTED_MODULE_6__["default"]),
+/* harmony export */   HandlesValidationErrors: () => (/* reexport safe */ _HandlesValidationErrors__WEBPACK_IMPORTED_MODULE_13__["default"]),
+/* harmony export */   HasCards: () => (/* reexport safe */ _HasCards__WEBPACK_IMPORTED_MODULE_14__["default"]),
+/* harmony export */   Localization: () => (/* reexport safe */ _Localization__WEBPACK_IMPORTED_MODULE_7__["default"]),
+/* harmony export */   MetricBehavior: () => (/* reexport safe */ _MetricBehavior__WEBPACK_IMPORTED_MODULE_8__["default"]),
+/* harmony export */   PreventsFormAbandonment: () => (/* reexport safe */ _PreventsFormAbandonment__WEBPACK_IMPORTED_MODULE_2__["default"]),
+/* harmony export */   PreventsModalAbandonment: () => (/* reexport safe */ _PreventsModalAbandonment__WEBPACK_IMPORTED_MODULE_3__["default"]),
+/* harmony export */   mapProps: () => (/* reexport safe */ _propTypes__WEBPACK_IMPORTED_MODULE_0__.mapProps),
+/* harmony export */   useCopyValueToClipboard: () => (/* reexport safe */ _CopiesToClipboard__WEBPACK_IMPORTED_MODULE_1__.useCopyValueToClipboard),
+/* harmony export */   useLocalization: () => (/* reexport safe */ _composables_useLocalization__WEBPACK_IMPORTED_MODULE_17__.useLocalization)
 /* harmony export */ });
 /* harmony import */ var _propTypes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./propTypes */ "../../vendor/laravel/nova/resources/js/mixins/propTypes.js");
-/* harmony import */ var _PreventsFormAbandonment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PreventsFormAbandonment */ "../../vendor/laravel/nova/resources/js/mixins/PreventsFormAbandonment.js");
-/* harmony import */ var _PreventsModalAbandonment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PreventsModalAbandonment */ "../../vendor/laravel/nova/resources/js/mixins/PreventsModalAbandonment.js");
-/* harmony import */ var _DependentFormField__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DependentFormField */ "../../vendor/laravel/nova/resources/js/mixins/DependentFormField.js");
-/* harmony import */ var _HandlesFormRequest__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./HandlesFormRequest */ "../../vendor/laravel/nova/resources/js/mixins/HandlesFormRequest.js");
-/* harmony import */ var _HandlesUploads__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./HandlesUploads */ "../../vendor/laravel/nova/resources/js/mixins/HandlesUploads.js");
-/* harmony import */ var _Localization__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Localization */ "../../vendor/laravel/nova/resources/js/mixins/Localization.js");
-/* harmony import */ var _MetricBehavior__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./MetricBehavior */ "../../vendor/laravel/nova/resources/js/mixins/MetricBehavior.js");
-/* harmony import */ var _FormEvents__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./FormEvents */ "../../vendor/laravel/nova/resources/js/mixins/FormEvents.js");
-/* harmony import */ var _FormField__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./FormField */ "../../vendor/laravel/nova/resources/js/mixins/FormField.js");
-/* harmony import */ var _HandlesValidationErrors__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./HandlesValidationErrors */ "../../vendor/laravel/nova/resources/js/mixins/HandlesValidationErrors.js");
-/* harmony import */ var _HasCards__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./HasCards */ "../../vendor/laravel/nova/resources/js/mixins/HasCards.js");
-/* harmony import */ var form_backend_validation__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! form-backend-validation */ "../../vendor/laravel/nova/node_modules/form-backend-validation/dist/index.js");
+/* harmony import */ var _CopiesToClipboard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CopiesToClipboard */ "../../vendor/laravel/nova/resources/js/mixins/CopiesToClipboard.js");
+/* harmony import */ var _PreventsFormAbandonment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PreventsFormAbandonment */ "../../vendor/laravel/nova/resources/js/mixins/PreventsFormAbandonment.js");
+/* harmony import */ var _PreventsModalAbandonment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PreventsModalAbandonment */ "../../vendor/laravel/nova/resources/js/mixins/PreventsModalAbandonment.js");
+/* harmony import */ var _DependentFormField__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DependentFormField */ "../../vendor/laravel/nova/resources/js/mixins/DependentFormField.js");
+/* harmony import */ var _HandlesFormRequest__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./HandlesFormRequest */ "../../vendor/laravel/nova/resources/js/mixins/HandlesFormRequest.js");
+/* harmony import */ var _HandlesUploads__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./HandlesUploads */ "../../vendor/laravel/nova/resources/js/mixins/HandlesUploads.js");
+/* harmony import */ var _Localization__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Localization */ "../../vendor/laravel/nova/resources/js/mixins/Localization.js");
+/* harmony import */ var _MetricBehavior__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./MetricBehavior */ "../../vendor/laravel/nova/resources/js/mixins/MetricBehavior.js");
+/* harmony import */ var _FieldValue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./FieldValue */ "../../vendor/laravel/nova/resources/js/mixins/FieldValue.js");
+/* harmony import */ var _FormEvents__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./FormEvents */ "../../vendor/laravel/nova/resources/js/mixins/FormEvents.js");
+/* harmony import */ var _FormField__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./FormField */ "../../vendor/laravel/nova/resources/js/mixins/FormField.js");
+/* harmony import */ var _HandlesFieldAttachments__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./HandlesFieldAttachments */ "../../vendor/laravel/nova/resources/js/mixins/HandlesFieldAttachments.js");
+/* harmony import */ var _HandlesValidationErrors__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./HandlesValidationErrors */ "../../vendor/laravel/nova/resources/js/mixins/HandlesValidationErrors.js");
+/* harmony import */ var _HasCards__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./HasCards */ "../../vendor/laravel/nova/resources/js/mixins/HasCards.js");
+/* harmony import */ var _HandlesPanelVisibility__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./HandlesPanelVisibility */ "../../vendor/laravel/nova/resources/js/mixins/HandlesPanelVisibility.js");
+/* harmony import */ var form_backend_validation__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! form-backend-validation */ "../../vendor/laravel/nova/node_modules/form-backend-validation/dist/index.js");
+/* harmony import */ var _composables_useLocalization__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../composables/useLocalization */ "../../vendor/laravel/nova/resources/js/composables/useLocalization.js");
+
+
+
+
+
 
 
 
@@ -1078,6 +1535,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_pick__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_pick__WEBPACK_IMPORTED_MODULE_0__);
 
 var propTypes = {
+  nested: {
+    type: Boolean,
+    "default": false
+  },
   preventInitialLoading: {
     type: Boolean,
     "default": false
@@ -1129,10 +1590,97 @@ var propTypes = {
   disablePagination: {
     type: Boolean,
     "default": false
+  },
+  clickAction: {
+    type: String,
+    "default": 'view',
+    validator: function validator(val) {
+      return ['edit', 'select', 'ignore', 'detail'].includes(val);
+    }
+  },
+  mode: {
+    type: String,
+    "default": 'form',
+    validator: function validator(v) {
+      return ['form', 'modal', 'action-modal', 'action-fullscreen'].includes(v);
+    }
   }
 };
 function mapProps(attributes) {
   return lodash_pick__WEBPACK_IMPORTED_MODULE_0___default()(propTypes, attributes);
+}
+
+/***/ }),
+
+/***/ "../../vendor/laravel/nova/resources/js/util/escapeUnicode.js":
+/*!********************************************************************!*\
+  !*** ../../vendor/laravel/nova/resources/js/util/escapeUnicode.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   escapeUnicode: () => (/* binding */ escapeUnicode)
+/* harmony export */ });
+function escapeUnicode(str) {
+  return str.replace(/[^\0-~]/g, function (c) {
+    return "\\u" + ('000' + c.charCodeAt().toString(16)).slice(-4);
+  });
+}
+
+/***/ }),
+
+/***/ "../../vendor/laravel/nova/resources/js/util/filled.js":
+/*!*************************************************************!*\
+  !*** ../../vendor/laravel/nova/resources/js/util/filled.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ filled)
+/* harmony export */ });
+/* harmony import */ var lodash_isNil__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/isNil */ "../../vendor/laravel/nova/node_modules/lodash/isNil.js");
+/* harmony import */ var lodash_isNil__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_isNil__WEBPACK_IMPORTED_MODULE_0__);
+
+function filled(value) {
+  return Boolean(!lodash_isNil__WEBPACK_IMPORTED_MODULE_0___default()(value) && value !== '');
+}
+
+/***/ }),
+
+/***/ "../../vendor/laravel/nova/resources/js/util/localization.js":
+/*!*******************************************************************!*\
+  !*** ../../vendor/laravel/nova/resources/js/util/localization.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ __)
+/* harmony export */ });
+/* harmony import */ var lodash_forEach__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/forEach */ "../../vendor/laravel/nova/node_modules/lodash/forEach.js");
+/* harmony import */ var lodash_forEach__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_forEach__WEBPACK_IMPORTED_MODULE_0__);
+
+function __(key, replace) {
+  var translation = Nova.config('translations')[key] ? Nova.config('translations')[key] : key;
+  lodash_forEach__WEBPACK_IMPORTED_MODULE_0___default()(replace, function (value, key) {
+    key = new String(key);
+    if (value === null) {
+      console.error("Translation '".concat(translation, "' for key '").concat(key, "' contains a null replacement."));
+      return;
+    }
+    value = new String(value);
+    var searches = [':' + key, ':' + key.toUpperCase(), ':' + key.charAt(0).toUpperCase() + key.slice(1)];
+    var replacements = [value, value.toUpperCase(), value.charAt(0).toUpperCase() + value.slice(1)];
+    for (var i = searches.length - 1; i >= 0; i--) {
+      translation = translation.replace(searches[i], replacements[i]);
+    }
+  });
+  return translation;
 }
 
 /***/ }),
@@ -10303,14 +10851,14 @@ const isProxyAvailable = typeof Proxy === 'function';
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   isPerformanceSupported: () => (/* reexport safe */ _time__WEBPACK_IMPORTED_MODULE_0__.isPerformanceSupported),
-/* harmony export */   now: () => (/* reexport safe */ _time__WEBPACK_IMPORTED_MODULE_0__.now),
+/* harmony export */   isPerformanceSupported: () => (/* reexport safe */ _time_js__WEBPACK_IMPORTED_MODULE_0__.isPerformanceSupported),
+/* harmony export */   now: () => (/* reexport safe */ _time_js__WEBPACK_IMPORTED_MODULE_0__.now),
 /* harmony export */   setupDevtoolsPlugin: () => (/* binding */ setupDevtoolsPlugin)
 /* harmony export */ });
-/* harmony import */ var _env__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./env */ "../../vendor/laravel/nova/node_modules/@vue/devtools-api/lib/esm/env.js");
-/* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./const */ "../../vendor/laravel/nova/node_modules/@vue/devtools-api/lib/esm/const.js");
-/* harmony import */ var _proxy__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./proxy */ "../../vendor/laravel/nova/node_modules/@vue/devtools-api/lib/esm/proxy.js");
-/* harmony import */ var _time__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./time */ "../../vendor/laravel/nova/node_modules/@vue/devtools-api/lib/esm/time.js");
+/* harmony import */ var _env_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./env.js */ "../../vendor/laravel/nova/node_modules/@vue/devtools-api/lib/esm/env.js");
+/* harmony import */ var _const_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./const.js */ "../../vendor/laravel/nova/node_modules/@vue/devtools-api/lib/esm/const.js");
+/* harmony import */ var _proxy_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./proxy.js */ "../../vendor/laravel/nova/node_modules/@vue/devtools-api/lib/esm/proxy.js");
+/* harmony import */ var _time_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./time.js */ "../../vendor/laravel/nova/node_modules/@vue/devtools-api/lib/esm/time.js");
 
 
 
@@ -10319,14 +10867,14 @@ __webpack_require__.r(__webpack_exports__);
 
 function setupDevtoolsPlugin(pluginDescriptor, setupFn) {
     const descriptor = pluginDescriptor;
-    const target = (0,_env__WEBPACK_IMPORTED_MODULE_1__.getTarget)();
-    const hook = (0,_env__WEBPACK_IMPORTED_MODULE_1__.getDevtoolsGlobalHook)();
-    const enableProxy = _env__WEBPACK_IMPORTED_MODULE_1__.isProxyAvailable && descriptor.enableEarlyProxy;
+    const target = (0,_env_js__WEBPACK_IMPORTED_MODULE_1__.getTarget)();
+    const hook = (0,_env_js__WEBPACK_IMPORTED_MODULE_1__.getDevtoolsGlobalHook)();
+    const enableProxy = _env_js__WEBPACK_IMPORTED_MODULE_1__.isProxyAvailable && descriptor.enableEarlyProxy;
     if (hook && (target.__VUE_DEVTOOLS_PLUGIN_API_AVAILABLE__ || !enableProxy)) {
-        hook.emit(_const__WEBPACK_IMPORTED_MODULE_2__.HOOK_SETUP, pluginDescriptor, setupFn);
+        hook.emit(_const_js__WEBPACK_IMPORTED_MODULE_2__.HOOK_SETUP, pluginDescriptor, setupFn);
     }
     else {
-        const proxy = enableProxy ? new _proxy__WEBPACK_IMPORTED_MODULE_3__.ApiProxy(descriptor, hook) : null;
+        const proxy = enableProxy ? new _proxy_js__WEBPACK_IMPORTED_MODULE_3__.ApiProxy(descriptor, hook) : null;
         const list = target.__VUE_DEVTOOLS_PLUGINS__ = target.__VUE_DEVTOOLS_PLUGINS__ || [];
         list.push({
             pluginDescriptor: descriptor,
@@ -10352,8 +10900,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ApiProxy: () => (/* binding */ ApiProxy)
 /* harmony export */ });
-/* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./const */ "../../vendor/laravel/nova/node_modules/@vue/devtools-api/lib/esm/const.js");
-/* harmony import */ var _time__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./time */ "../../vendor/laravel/nova/node_modules/@vue/devtools-api/lib/esm/time.js");
+/* harmony import */ var _const_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./const.js */ "../../vendor/laravel/nova/node_modules/@vue/devtools-api/lib/esm/const.js");
+/* harmony import */ var _time_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./time.js */ "../../vendor/laravel/nova/node_modules/@vue/devtools-api/lib/esm/time.js");
 
 
 class ApiProxy {
@@ -10394,11 +10942,11 @@ class ApiProxy {
                 currentSettings = value;
             },
             now() {
-                return (0,_time__WEBPACK_IMPORTED_MODULE_0__.now)();
+                return (0,_time_js__WEBPACK_IMPORTED_MODULE_0__.now)();
             },
         };
         if (hook) {
-            hook.on(_const__WEBPACK_IMPORTED_MODULE_1__.HOOK_PLUGIN_SETTINGS_SET, (pluginId, value) => {
+            hook.on(_const_js__WEBPACK_IMPORTED_MODULE_1__.HOOK_PLUGIN_SETTINGS_SET, (pluginId, value) => {
                 if (pluginId === this.plugin.id) {
                     this.fallbacks.setSettings(value);
                 }
@@ -13887,6 +14435,7 @@ var $concat = bind.call(Function.call, Array.prototype.concat);
 var $spliceApply = bind.call(Function.apply, Array.prototype.splice);
 var $replace = bind.call(Function.call, String.prototype.replace);
 var $strSlice = bind.call(Function.call, String.prototype.slice);
+var $exec = bind.call(Function.call, RegExp.prototype.exec);
 
 /* adapted from https://github.com/lodash/lodash/blob/4.17.15/dist/lodash.js#L6735-L6744 */
 var rePropName = /[^%.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|%$))/g;
@@ -13942,6 +14491,9 @@ module.exports = function GetIntrinsic(name, allowMissing) {
 		throw new $TypeError('"allowMissing" argument must be a boolean');
 	}
 
+	if ($exec(/^%?[^%]*%?$/g, name) === null) {
+		throw new $SyntaxError('`%` may not be present anywhere but at the beginning and end of the intrinsic name');
+	}
 	var parts = stringToPath(name);
 	var intrinsicBaseName = parts.length > 0 ? parts[0] : '';
 
@@ -18596,6 +19148,17 @@ module.exports = debounce;
 
 /***/ }),
 
+/***/ "../../vendor/laravel/nova/node_modules/lodash/each.js":
+/*!*************************************************************!*\
+  !*** ../../vendor/laravel/nova/node_modules/lodash/each.js ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__(/*! ./forEach */ "../../vendor/laravel/nova/node_modules/lodash/forEach.js");
+
+
+/***/ }),
+
 /***/ "../../vendor/laravel/nova/node_modules/lodash/eq.js":
 /*!***********************************************************!*\
   !*** ../../vendor/laravel/nova/node_modules/lodash/eq.js ***!
@@ -20074,8 +20637,9 @@ function addNumericSeparator(num, str) {
     return $replace.call(str, sepRegex, '$&_');
 }
 
-var inspectCustom = (__webpack_require__(/*! ./util.inspect */ "?649e").custom);
-var inspectSymbol = inspectCustom && isSymbol(inspectCustom) ? inspectCustom : null;
+var utilInspect = __webpack_require__(/*! ./util.inspect */ "?649e");
+var inspectCustom = utilInspect.custom;
+var inspectSymbol = isSymbol(inspectCustom) ? inspectCustom : null;
 
 module.exports = function inspect_(obj, options, depth, seen) {
     var opts = options || {};
@@ -20165,7 +20729,7 @@ module.exports = function inspect_(obj, options, depth, seen) {
         return inspect_(value, opts, depth + 1, seen);
     }
 
-    if (typeof obj === 'function') {
+    if (typeof obj === 'function' && !isRegExp(obj)) { // in older engines, regexes are callable
         var name = nameOf(obj);
         var keys = arrObjKeys(obj, inspect);
         return '[Function' + (name ? ': ' + name : ' (anonymous)') + ']' + (keys.length > 0 ? ' { ' + $join.call(keys, ', ') + ' }' : '');
@@ -20195,15 +20759,15 @@ module.exports = function inspect_(obj, options, depth, seen) {
     }
     if (isError(obj)) {
         var parts = arrObjKeys(obj, inspect);
-        if ('cause' in obj && !isEnumerable.call(obj, 'cause')) {
+        if (!('cause' in Error.prototype) && 'cause' in obj && !isEnumerable.call(obj, 'cause')) {
             return '{ [' + String(obj) + '] ' + $join.call($concat.call('[cause]: ' + inspect(obj.cause), parts), ', ') + ' }';
         }
         if (parts.length === 0) { return '[' + String(obj) + ']'; }
         return '{ [' + String(obj) + '] ' + $join.call(parts, ', ') + ' }';
     }
     if (typeof obj === 'object' && customInspect) {
-        if (inspectSymbol && typeof obj[inspectSymbol] === 'function') {
-            return obj[inspectSymbol]();
+        if (inspectSymbol && typeof obj[inspectSymbol] === 'function' && utilInspect) {
+            return utilInspect(obj, { depth: maxDepth - depth });
         } else if (customInspect !== 'symbol' && typeof obj.inspect === 'function') {
             return obj.inspect();
         }
@@ -21117,6 +21681,7 @@ var stringify = function stringify(
     object,
     prefix,
     generateArrayPrefix,
+    commaRoundTrip,
     strictNullHandling,
     skipNulls,
     encoder,
@@ -21181,7 +21746,7 @@ var stringify = function stringify(
                 for (var i = 0; i < valuesArray.length; ++i) {
                     valuesJoined += (i === 0 ? '' : ',') + formatter(encoder(valuesArray[i], defaults.encoder, charset, 'value', format));
                 }
-                return [formatter(keyValue) + '=' + valuesJoined];
+                return [formatter(keyValue) + (commaRoundTrip && isArray(obj) && valuesArray.length === 1 ? '[]' : '') + '=' + valuesJoined];
             }
             return [formatter(keyValue) + '=' + formatter(encoder(obj, defaults.encoder, charset, 'value', format))];
         }
@@ -21205,6 +21770,8 @@ var stringify = function stringify(
         objKeys = sort ? keys.sort(sort) : keys;
     }
 
+    var adjustedPrefix = commaRoundTrip && isArray(obj) && obj.length === 1 ? prefix + '[]' : prefix;
+
     for (var j = 0; j < objKeys.length; ++j) {
         var key = objKeys[j];
         var value = typeof key === 'object' && typeof key.value !== 'undefined' ? key.value : obj[key];
@@ -21214,8 +21781,8 @@ var stringify = function stringify(
         }
 
         var keyPrefix = isArray(obj)
-            ? typeof generateArrayPrefix === 'function' ? generateArrayPrefix(prefix, key) : prefix
-            : prefix + (allowDots ? '.' + key : '[' + key + ']');
+            ? typeof generateArrayPrefix === 'function' ? generateArrayPrefix(adjustedPrefix, key) : adjustedPrefix
+            : adjustedPrefix + (allowDots ? '.' + key : '[' + key + ']');
 
         sideChannel.set(object, step);
         var valueSideChannel = getSideChannel();
@@ -21224,6 +21791,7 @@ var stringify = function stringify(
             value,
             keyPrefix,
             generateArrayPrefix,
+            commaRoundTrip,
             strictNullHandling,
             skipNulls,
             encoder,
@@ -21320,6 +21888,10 @@ module.exports = function (object, opts) {
     }
 
     var generateArrayPrefix = arrayPrefixGenerators[arrayFormat];
+    if (opts && 'commaRoundTrip' in opts && typeof opts.commaRoundTrip !== 'boolean') {
+        throw new TypeError('`commaRoundTrip` must be a boolean, or absent');
+    }
+    var commaRoundTrip = generateArrayPrefix === 'comma' && opts && opts.commaRoundTrip;
 
     if (!objKeys) {
         objKeys = Object.keys(obj);
@@ -21340,6 +21912,7 @@ module.exports = function (object, opts) {
             obj[key],
             key,
             generateArrayPrefix,
+            commaRoundTrip,
             options.strictNullHandling,
             options.skipNulls,
             options.encode ? options.encoder : null,
@@ -21797,8 +22370,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _vue_devtools_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @vue/devtools-api */ "../../vendor/laravel/nova/node_modules/@vue/devtools-api/lib/esm/index.js");
 /*!
- * vuex v4.0.2
- * (c) 2021 Evan You
+ * vuex v4.1.0
+ * (c) 2022 Evan You
  * @license MIT
  */
 
@@ -21915,6 +22488,7 @@ function resetStore (store, hot) {
 
 function resetStoreState (store, state, hot) {
   var oldState = store._state;
+  var oldScope = store._scope;
 
   // bind store public getters
   store.getters = {};
@@ -21922,22 +22496,33 @@ function resetStoreState (store, state, hot) {
   store._makeLocalGettersCache = Object.create(null);
   var wrappedGetters = store._wrappedGetters;
   var computedObj = {};
-  forEachValue(wrappedGetters, function (fn, key) {
-    // use computed to leverage its lazy-caching mechanism
-    // direct inline function use will lead to closure preserving oldState.
-    // using partial to return function with only arguments preserved in closure environment.
-    computedObj[key] = partial(fn, store);
-    Object.defineProperty(store.getters, key, {
-      // TODO: use `computed` when it's possible. at the moment we can't due to
-      // https://github.com/vuejs/vuex/pull/1883
-      get: function () { return computedObj[key](); },
-      enumerable: true // for local getters
+  var computedCache = {};
+
+  // create a new effect scope and create computed object inside it to avoid
+  // getters (computed) getting destroyed on component unmount.
+  var scope = (0,vue__WEBPACK_IMPORTED_MODULE_0__.effectScope)(true);
+
+  scope.run(function () {
+    forEachValue(wrappedGetters, function (fn, key) {
+      // use computed to leverage its lazy-caching mechanism
+      // direct inline function use will lead to closure preserving oldState.
+      // using partial to return function with only arguments preserved in closure environment.
+      computedObj[key] = partial(fn, store);
+      computedCache[key] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () { return computedObj[key](); });
+      Object.defineProperty(store.getters, key, {
+        get: function () { return computedCache[key].value; },
+        enumerable: true // for local getters
+      });
     });
   });
 
   store._state = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
     data: state
   });
+
+  // register the newly created effect scope to the store so that we can
+  // dispose the effects when this method runs again in the future.
+  store._scope = scope;
 
   // enable strict mode for new state
   if (store.strict) {
@@ -21952,6 +22537,11 @@ function resetStoreState (store, state, hot) {
         oldState.data = null;
       });
     }
+  }
+
+  // dispose previously registered effect scope if there is one.
+  if (oldScope) {
+    oldScope.stop();
   }
 }
 
@@ -22701,6 +23291,12 @@ var Store = function Store (options) {
   this._modulesNamespaceMap = Object.create(null);
   this._subscribers = [];
   this._makeLocalGettersCache = Object.create(null);
+
+  // EffectScope instance. when registering new getters, we wrap them inside
+  // EffectScope so that getters (computed) would not be destroyed on
+  // component unmount.
+  this._scope = null;
+
   this._devtools = devtools;
 
   // bind commit and dispatch to self
@@ -23243,7 +23839,7 @@ function pad (num, maxLength) {
 }
 
 var index = {
-  version: '4.0.2',
+  version: '4.1.0',
   Store: Store,
   storeKey: storeKey,
   createStore: createStore,
